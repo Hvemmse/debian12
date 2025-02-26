@@ -1,0 +1,47 @@
+# Locale settings
+d-i debian-installer/locale string da_DK.UTF-8
+d-i debian-installer/language string da
+d-i debian-installer/country string DK
+d-i debian-installer/keyboard-configuration/xkb-keymap select dk
+
+# Network configuration
+d-i netcfg/get_hostname string debian
+d-i netcfg/get_domain string localdomain
+
+# Mirror settings
+d-i mirror/country string DK
+d-i mirror/http/hostname deb.debian.org
+d-i mirror/http/directory /debian
+d-i mirror/http/proxy string
+
+# Disk partitioning
+d-i partman-auto/disk string /dev/sda
+d-i partman-auto/method string regular
+d-i partman-auto/choose_active_partition boolean true
+d-i partman-auto/confirm boolean true
+d-i partman-auto/confirm_nooverwrite boolean true
+d-i partman-auto/expert_recipe string boot-root :: 512 2048 512 ext4 flags={ mountpoint=/boot } . 1024 2048 -1 ext4 flags={ mountpoint=/ } . 512 2048 512 linux-swap flags={ last } .
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_active_partition boolean true
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+# Account setup
+d-i passwd/root-password password dinadgangskode
+d-i passwd/root-password-again password dinadgangskode
+d-i user-setup/allow-password-weak boolean true
+d-i user-setup/passwd/user-fullname string root
+d-i user-setup/passwd/username string root
+d-i user-setup/passwd/user-password password dinadgangskode
+d-i user-setup/passwd/user-password-again password dinadgangskode
+d-i user-setup/allow-password-weak boolean true
+
+# Package selection
+tasksel tasksel/first multiselect standard, ssh-server
+
+# Bootloader installation
+d-i grub-installer/grub2_ieee1275 boolean true
+d-i grub-installer/with_other_os boolean true
+
+# Finish installation
+d-i finish-install/reboot boolean true
